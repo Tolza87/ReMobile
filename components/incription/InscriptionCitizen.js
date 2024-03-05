@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -8,6 +7,8 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+
+import { styles } from './inscription_main';
 
 export default function RegistrationScreen() {
   const [name, setName] = useState('');
@@ -17,6 +18,18 @@ export default function RegistrationScreen() {
   const [postalCode, setPostalCode] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const formatPhoneNumber = (text) => {
+    const cleanedText = text.replace(/\D/g, '');
+    const formattedText = cleanedText.replace(/(\d{2})(?=\d)/g, '$1 ');
+    const limitedText = formattedText.slice(0, 14);
+    setPhone(limitedText);
+  };
+
+  const validateEmail = (text) => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(text);
+  };
 
   const handleRegistration = () => {
     // Handle form submission and API calls here
@@ -47,7 +60,7 @@ export default function RegistrationScreen() {
           style={styles.input}
           id = "firstname"
           placeholder="Prénom"
-          value={''} // You can add state management here
+          value={''}
           onChangeText={text => setName(text)}
         />
       </View>
@@ -55,22 +68,28 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "phone-number"
           placeholder="Téléphone"
           value={phone}
-          onChangeText={text => setPhone(text)}
+          onChangeText={formatPhoneNumber}
           keyboardType="phone-pad"
+          maxLength={14}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "mail"
+          id="mail"
           placeholder="Adresse e-mail"
           value={email}
           onChangeText={text => setEmail(text)}
           autoCapitalize="none"
+          keyboardType="email-address"
+          onBlur={() => {
+            if (!validateEmail(email)) {
+              alert("Adresse e-mail invalide");
+            }
+          }}
         />
       </View>
 
@@ -87,21 +106,31 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "ZIP_code"
+          id="ZIP_code"
           placeholder="Code postal"
           value={postalCode}
-          onChangeText={text => setPostalCode(text)}
+          onChangeText={text => {
+            const filteredText = text.replace(/\D/g, '');
+            if (filteredText.length <= 5) {
+              setPostalCode(filteredText);
+            }
+          }}
           keyboardType="number-pad"
+          maxLength={5}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "login"
+          id="login"
           placeholder="Identifiant"
           value={username}
-          onChangeText={text => setUsername(text)}
+          onChangeText={text => {
+            const filteredText = text.replace(/[^\w]/g, '');
+
+            setUsername(filteredText);
+          }}
           autoCapitalize="none"
         />
       </View>
@@ -123,54 +152,3 @@ export default function RegistrationScreen() {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#F7F7F7',
-      alignItems: 'center',
-    },
-    headerContainer: {
-      marginBottom: '2%',
-      width: '30%',
-      paddingHorizontal: '6%',
-      paddingVertical: '6%',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    headerTitle: {
-      color: '#FFFFFF',
-      fontSize: 24,
-      fontWeight: 'bold',
-    },
-    formContainer: {
-      width: '100%',
-      paddingHorizontal: 24,
-      marginTop: 32,
-    },
-    inputContainer: {
-      marginBottom: 16,
-    },
-    input: {
-      height: 48,
-      borderWidth: 1,
-      borderColor: '#CCCCCC',
-      borderRadius: 4,
-      paddingHorizontal: 16,
-      fontSize: 16,
-    },
-    button: {
-        marginBottom: '2%',
-        backgroundColor: '#003580',
-        padding: 10,
-        borderRadius: 4,
-        width: '35%',
-        alignItems: 'center',
-        marginTop: 32,
-      },
-    buttonText: {
-      color: '#FFFFFF',
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-  });
