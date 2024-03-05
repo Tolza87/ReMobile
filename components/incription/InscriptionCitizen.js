@@ -11,11 +11,12 @@ import {
 import { styles } from './inscription_main';
 
 export default function RegistrationScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [mail, setEmail] = useState('');
+  const [phone_number, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [postalCode, setPostalCode] = useState('');
+  const [zip_code, setPostalCode] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,8 +33,54 @@ export default function RegistrationScreen() {
   };
 
   const handleRegistration = () => {
-    // Handle form submission and API calls here
-    // faire un post de données que je recup du formu et l'envoyer sur l'endpoint 
+    // Créer un objet citoyen avec toutes les données
+    const citizen = {
+      firstname: firstname,
+      lastname: lastname,
+      mail: mail,
+      phone_number: phone_number,
+      address: address,
+      zip_code: zip_code,
+      username: username,
+      password: password,
+      level: 0,
+      note: 0,
+      point: 0,
+    };
+  
+    // Afficher les données du citoyen en tant que JSON dans la console
+    console.log(JSON.stringify(citizen));
+  
+    // Réinitialiser les champs après l'enregistrement
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPhone('');
+    setAddress('');
+    setPostalCode('');
+    setUsername('');
+    setPassword('');
+  
+    // Envoyer une requête POST pour créer un citoyen
+    fetch('http://localhost:8080/citizen/createCitizen', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(citizen),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erreur lors de la création du citoyen');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Citoyen créé avec succès:', data);
+    })
+    .catch(error => {
+      console.error('Erreur:', error);
+    });
   };
 
   return (
@@ -41,35 +88,36 @@ export default function RegistrationScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-    </View>
-    </View>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}></View>
+      </View>
+      
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "lastname"
+          id="lastname"
           placeholder="Nom"
-          value={name}
-          onChangeText={text => setName(text)}
+          value={lastname}
+          onChangeText={text => setLastName(text)}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "firstname"
+          id="firstname"
           placeholder="Prénom"
-          value={''}
-          onChangeText={text => setName(text)}
+          value={firstname}
+          onChangeText={text => setFirstName(text)}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
+          id="phone_number"
           style={styles.input}
           placeholder="Téléphone"
-          value={phone}
+          value={phone_number}
           onChangeText={formatPhoneNumber}
           keyboardType="phone-pad"
           maxLength={14}
@@ -81,12 +129,12 @@ export default function RegistrationScreen() {
           style={styles.input}
           id="mail"
           placeholder="Adresse e-mail"
-          value={email}
+          value={mail}
           onChangeText={text => setEmail(text)}
           autoCapitalize="none"
           keyboardType="email-address"
           onBlur={() => {
-            if (!validateEmail(email)) {
+            if (!validateEmail(mail)) {
               alert("Adresse e-mail invalide");
             }
           }}
@@ -96,7 +144,7 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "address"
+          id="address"
           placeholder="Adresse"
           value={address}
           onChangeText={text => setAddress(text)}
@@ -106,9 +154,9 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id="ZIP_code"
+          id="zip_code"
           placeholder="Code postal"
-          value={postalCode}
+          value={zip_code}
           onChangeText={text => {
             const filteredText = text.replace(/\D/g, '');
             if (filteredText.length <= 5) {
@@ -138,7 +186,7 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id = "password"
+          id="password"
           placeholder="Mot de passe"
           value={password}
           onChangeText={text => setPassword(text)}
@@ -149,6 +197,14 @@ export default function RegistrationScreen() {
       <TouchableOpacity style={styles.button} onPress={handleRegistration}>
         <Text style={styles.buttonText}>S'inscrire</Text>
       </TouchableOpacity>
+      <View style={styles.loginTextContainer}>
+        <Text style={styles.loginText}>Vous avez un compte ? </Text>
+        <TouchableOpacity onPress={() => console.log("Redirigez vers la page de connexion.")}>
+          <Text style={[styles.loginText, styles.link]}>Connectez-vous</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
+
+
   );
 };

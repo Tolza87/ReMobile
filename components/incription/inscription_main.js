@@ -55,4 +55,19 @@ export const styles = StyleSheet.create({
     fontSize: adaptiveFontSize(16), // Utilisation de la fonction d'adaptation
     fontWeight: 'bold',
   },
+  loginTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  loginText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  link: {
+    textDecorationLine: 'underline',
+    marginLeft: 5,
+    color: 'blue',
+  },
 });
