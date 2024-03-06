@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import {
   Text,
+  ScrollView,
+  ImageBackground,
   View,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native'; 
 import { styles } from './inscription_main';
+import ImageBack from '../../assets/hero2.png';
 
 export default function RegistrationScreen() {
-  const [name, setName] = useState('');
-  const [siret, setSiret] = useState('');
-  const [siren, setSiren] = useState('');
+  const navigation = useNavigation();
+
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
   const [mail, setEmail] = useState('');
   const [phone_number, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -28,20 +32,6 @@ export default function RegistrationScreen() {
     setPhone(limitedText);
   };
 
-  const formatSiret = (text) => {
-    const cleanedText = text.replace(/\D/g, '');
-    const formattedText = cleanedText.replace(/^(\d{3})(\d{3})(\d{3})(\d{5})$/, '$1 $2 $3 $4');
-    const limitedText = formattedText.slice(0, 14);
-    
-    setSiret(limitedText);
-  };
-
-  const formatSiren = (text) => {
-    const cleanedText = text.replace(/\D/g, '');
-    const limitedText = cleanedText.slice(0, 9);
-    setSiren(limitedText);
-  };
-
   const validateEmail = (text) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(text);
@@ -49,9 +39,8 @@ export default function RegistrationScreen() {
 
   const handleRegistration = () => {
     const citizen = {
-      name: name,
-      siret: siret,
-      siren: siren,
+      firstname: firstname,
+      lastname: lastname,
       mail: mail,
       phone_number: phone_number,
       address: address,
@@ -66,9 +55,8 @@ export default function RegistrationScreen() {
 
     console.log(JSON.stringify(citizen));
 
-    setName('');
-    setSiret('');
-    setSiren('');
+    setFirstName('');
+    setLastName('');
     setEmail('');
     setPhone('');
     setAddress('');
@@ -76,7 +64,8 @@ export default function RegistrationScreen() {
     setUsername('');
     setPassword('');
   
-    fetch('http://localhost:8080/corporation/createCorporation', {
+    // Envoyer une requête POST pour créer un citoyen
+    fetch('http://localhost:8080/citizen/createCitizen', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -85,12 +74,13 @@ export default function RegistrationScreen() {
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error('Erreur lors de la création de la corp');
+        throw new Error('Erreur lors de la création du citoyen');
       }
       return response.json();
     })
     .then(data => {
       console.log('Citoyen créé avec succès:', data);
+      navigation.navigate('authenticate');
     })
     .catch(error => {
       console.error('Erreur:', error);
@@ -98,6 +88,8 @@ export default function RegistrationScreen() {
   };
 
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ImageBackground source={ImageBack} style={styles.background}>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -109,34 +101,20 @@ export default function RegistrationScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id="name"
+          id="lastname"
           placeholder="Nom"
-          value={name}
-          onChangeText={text => setName(text)}
+          value={lastname}
+          onChangeText={text => setLastName(text)}
         />
       </View>
 
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
-          id="siret"
-          placeholder="Siret"
-          value={siret}
-          onChangeText={formatSiret}
-          keyboardType="numeric"
-          maxLength={14}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          id="siren"
-          placeholder="Siren"
-          value={siren}
-          onChangeText={formatSiren}
-          keyboardType="numeric"
-          maxLength={9}
+          id="firstname"
+          placeholder="Prénom"
+          value={firstname}
+          onChangeText={text => setFirstName(text)}
         />
       </View>
 
@@ -232,7 +210,7 @@ export default function RegistrationScreen() {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-
-
+    </ImageBackground>
+    </ScrollView>
   );
 };

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Text, SafeAreaView, View, TextInput, Button } from 'react-native';
+import { Text, ScrollView, ImageBackground, SafeAreaView, View, TextInput, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './authenticate_main';
 import { Linking } from 'react-native';
+import ImageBack from '../../assets/hero2.png';
+import { useNavigation } from '@react-navigation/native'; 
 
 export default function Authenticate() {
+  const navigation = useNavigation();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,6 +38,7 @@ export default function Authenticate() {
         setIsLoggedIn(true);
         console.log('Connexion réussie', 'Vous êtes maintenant connecté.');
         console.log("Token:", token);
+        navigation.navigate('Accueil');
       } else {
         throw new Error('La connexion a échoué');
       }
@@ -54,8 +59,10 @@ export default function Authenticate() {
   };
 
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ImageBackground source={ImageBack} style={styles.background}>
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Vous avez déjà un compte</Text>
+      <Text style={styles.title}>Connectez vous</Text>
       <TextInput
         style={styles.input}
         placeholder="Identifiant"
@@ -93,5 +100,7 @@ export default function Authenticate() {
       </View>
     )}
     </SafeAreaView>
+    </ImageBackground>
+    </ScrollView>
   );
 }

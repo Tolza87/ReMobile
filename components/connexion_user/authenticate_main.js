@@ -1,27 +1,16 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
-  container: {
+  background: {
+    width: width,
+    height: height,
+    resizeMode: 'cover',
     justifyContent: 'center',
+  },
+  container: {
     alignItems: 'center',
-    padding: 20,
-    marginTop: 200,
-    width: width - 40,
-    height: 400,
-    maxWidth: 500,
-    alignSelf: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 1,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   title: {
     fontSize: 24,
@@ -31,13 +20,14 @@ export const styles = StyleSheet.create({
     width: '70%',
     marginBottom: 10,
     borderWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: '#333',
     padding: 10,
     borderRadius: 5,
+    backgroundColor: '#FFF',
   },
   buttonContainer: {
     marginTop: 10,
-    width: '50%',
+    width: '70%',
     borderRadius: 5,
   },
   separator: {

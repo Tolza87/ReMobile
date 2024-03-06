@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, ImageBackground, StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
 import monImage from '../assets/hero.png'; 
-import hero from '../assets/hero.png'; 
+import hero from '../assets/hero2.png'; 
 import jardin from '../assets/jardin.jpg'; 
 import ecole from '../assets/ecole.jpg'; 
 import ville from '../assets/ville.png'; 
