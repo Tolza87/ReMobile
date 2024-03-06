@@ -1,13 +1,25 @@
-import React from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
-import Authenticate from './components/connexion_user/authenticate';
-import InscriptionCitizen from './components/incription/InscriptionCitizen'
-import InscriptionCorporation from './components/incription/inscriptionCorporation'
+// App.js
 
-export default function App() {
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaView } from 'react-native';
+import HeaderApp from './components/header/HeaderApp';
+import InscriptionCitizen from './components/incription/InscriptionCitizen';
+import Authenticate from './components/connexion_user/authenticate';
+const Stack = createStackNavigator();
+
+function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <InscriptionCorporation /> {/* si tu veux changer de page change la page et oublie pas d'importer */}
+      <HeaderApp />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Authenticate" headerMode="none">
+          <Stack.Screen name="Authenticate" component={Authenticate} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
+
+export default App;
