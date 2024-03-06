@@ -44,7 +44,6 @@ export default function Authenticate() {
       }
     } catch (error) {
       console.log('Erreur de connexion', error.message);
-      navigation.navigate('Accueil');
     }
   };
 

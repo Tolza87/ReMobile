@@ -101,7 +101,6 @@ export default function RegistrationScreen() {
     })
     .catch(error => {
       console.error('Erreur:', error);
-      navigation.navigate('authenticate');
     });
   };
 
