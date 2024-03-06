@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import { View, Text, StatusBar, TouchableOpacity, Image, StyleSheet, Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Importez useNavigation depuis react-navigation
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './header_main';
+import logo from '../../assets/logoGouv.png';
+import JeVeuxlogo from '../../assets/JeVeux.png';
 
-const Header = ({ navigation }) => { // Assurez-vous de passer l'objet navigation en prop si vous utilisez React Navigation
+const Header = () => {
+  const navigation = useNavigation(); // Utilisez useNavigation pour obtenir l'objet de navigation
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Fonction pour ouvrir un lien externe
   const handlePressExternalLink = (url) => {
     Linking.canOpenURL(url).then((supported) => {
       if (supported) {
@@ -26,8 +30,10 @@ const Header = ({ navigation }) => { // Assurez-vous de passer l'objet navigatio
       <StatusBar barStyle="dark-content" />
       <View style={styles.headerContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.mainTitle}>Je veux vraiment aider</Text>
-          <Text style={styles.subtitle}>Liberté Égalité Renault Coupé</Text>
+          <Image source={logo} style={styles.logo} />
+          <View style={styles.titleTextContainer}>
+            <Image source={JeVeuxlogo} style={styles.JeVeuxlogo} />
+          </View>
         </View>
         <TouchableOpacity onPress={toggleMenu}>
           {isMenuOpen ? (
@@ -42,8 +48,11 @@ const Header = ({ navigation }) => { // Assurez-vous de passer l'objet navigatio
           <TouchableOpacity onPress={() => navigation.navigate('Accueil')}>
             <Text style={styles.menuItem}>Accueil</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {/* fonction de déconnexion ici */}}>
-            <Text style={styles.menuItem}>Déconnexion</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('authenticate')}>
+            <Text style={styles.menuItem}>Mon Compte</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('InscriptionCompte')}>
+            <Text style={styles.menuItem}>Inscription</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handlePressExternalLink("https://www.gouvernement.fr/mentions-legales")}>
             <Text style={styles.menuItem}>Mentions Légales</Text>
@@ -54,7 +63,5 @@ const Header = ({ navigation }) => { // Assurez-vous de passer l'objet navigatio
     </View>
   );
 };
-
-// Vos styles existants ici
 
 export default Header;

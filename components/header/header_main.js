@@ -9,8 +9,21 @@ export const styles = StyleSheet.create({
       backgroundColor: 'white',
     },
     titleContainer: {
-      flex: 1,
+      flexDirection: 'row',
       alignItems: 'center',
+      marginLeft: 10, 
+    },
+    logo: {
+      width: 50,
+      height: 50, 
+    },
+    titleTextContainer: {
+      marginLeft: 10,
+      alignItems: 'center',
+    },
+    JeVeuxlogo:{
+      width: 270,
+      height: 50, 
     },
     mainTitle: {
       fontWeight: 'bold',
@@ -19,7 +32,7 @@ export const styles = StyleSheet.create({
     },
     subtitle: {
       fontSize: 12,
-      color: 'black', // Couleur du texte pour le sous-titre
+      color: 'black', 
     },
     separator: {
       height: 1,
@@ -47,4 +60,5 @@ export const styles = StyleSheet.create({
         padding: 10,
         // Définissez d'autres styles pour les éléments du menu ici
       },
+      
   });

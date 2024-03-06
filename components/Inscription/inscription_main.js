@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     paddingHorizontal: 16,
     fontSize: adaptiveFontSize(16),
-    color: '#FFF', // Couleur du texte
+    color: '#000', // Couleur du texte
     marginBottom: 16, // Marge inférieure entre les champs
   },
   button: {

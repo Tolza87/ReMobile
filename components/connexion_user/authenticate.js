@@ -3,7 +3,7 @@ import { Text, ScrollView, ImageBackground, SafeAreaView, View, TextInput, Butto
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './authenticate_main';
 import { Linking } from 'react-native';
-import ImageBack from '../../assets/hero2.png';
+import ImageBack from '../../assets/hero.png';
 import { useNavigation } from '@react-navigation/native'; 
 
 export default function Authenticate() {
