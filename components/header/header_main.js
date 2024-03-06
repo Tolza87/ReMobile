@@ -31,10 +31,20 @@ export const styles = StyleSheet.create({
     serviceTitle: {
       fontWeight: 'bold',
       fontSize: 20,
-      color: 'black', // Couleur du texte pour le nom du service
+      color: 'black',
     },
     serviceDescription: {
       fontSize: 16,
-      color: 'grey', // Couleur du texte pour la description du service
+      color: 'grey',
     },
+    menuContainer: {
+        backgroundColor: 'white', // Vous pouvez changer la couleur de fond
+        paddingTop: 20,
+        paddingBottom: 20,
+        // Définissez d'autres styles pour le conteneur du menu ici
+      },
+      menuItem: {
+        padding: 10,
+        // Définissez d'autres styles pour les éléments du menu ici
+      },
   });

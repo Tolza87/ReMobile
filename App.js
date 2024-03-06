@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native';
 import HeaderApp from './components/header/HeaderApp';
-import InscriptionCitizen from './components/incription/InscriptionCitizen';
 import Authenticate from './components/connexion_user/authenticate';
 const Stack = createStackNavigator();
 
