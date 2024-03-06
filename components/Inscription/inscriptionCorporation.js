@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import {
+  ScrollView,
   Text,
   View,
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  ImageBackground,
 } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 import { styles } from './inscription_main';
+import ImageBack from '../../assets/hero2.png';
+
 
 export default function RegistrationScreen() {
+  const navigation = useNavigation();
+  
   const [name, setName] = useState('');
   const [siret, setSiret] = useState('');
   const [siren, setSiren] = useState('');
@@ -91,13 +97,17 @@ export default function RegistrationScreen() {
     })
     .then(data => {
       console.log('Citoyen créé avec succès:', data);
+      navigation.navigate('authenticate');
     })
     .catch(error => {
       console.error('Erreur:', error);
+      navigation.navigate('authenticate');
     });
   };
 
   return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ImageBackground source={ImageBack} style={styles.background}>
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -232,7 +242,7 @@ export default function RegistrationScreen() {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-
-
+    </ImageBackground>
+    </ScrollView>
   );
 };

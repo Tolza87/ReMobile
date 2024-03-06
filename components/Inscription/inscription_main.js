@@ -6,9 +6,15 @@ const adaptiveFontSize = (size) => {
   return size * (width / 360); 
 };
 
+
 export const styles = StyleSheet.create({
+  background: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
-    backgroundColor: '#F7F7F7',
     alignItems: 'center',
   },
   headerContainer: {
@@ -25,32 +31,35 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   formContainer: {
-    width: '100%',
-    paddingHorizontal: width * 0.06, 
-    marginTop: 32,
+    width: '80%', // Ajuster selon votre mise en page
+    marginTop: height * 0.1, // Marge du haut
   },
   inputContainer: {
     marginBottom: 16,
   },
   input: {
-    height: 48,
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
+    height: 48, // Hauteur fixe pour tous les champs TextInput
+    width: 200,
+    borderWidth: 2,
+    borderColor: '#003580',
+    backgroundColor: '#FFF', // Couleur de la bordure
+    placeholderTextColor: '#888',
     borderRadius: 4,
     paddingHorizontal: 16,
     fontSize: adaptiveFontSize(16),
+    color: '#FFF', // Couleur du texte
+    marginBottom: 16, // Marge inférieure entre les champs
   },
   button: {
-    marginBottom: height * 0.02,
     backgroundColor: '#003580',
-    padding: 10,
+    paddingVertical: 12,
     borderRadius: 4,
-    width: '80%',
     alignItems: 'center',
-    marginTop: 32,
   },
   buttonText: {
-    color: '#FFFFFF',
+    width: 200,
+    color: '#FFF',
+    textAlign: 'center',
     fontSize: adaptiveFontSize(16),
     fontWeight: 'bold',
   },
