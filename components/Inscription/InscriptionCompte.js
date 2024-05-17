@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, Dimensions, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ImageBack from '../../assets/hero2.png';
 
@@ -17,6 +17,7 @@ const MyAccountScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <ImageBackground source={ImageBack} style={styles.backgroundImage}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.container}>
           <Text style={styles.title}>Mon Compte</Text>
           <TouchableOpacity style={[styles.button, { backgroundColor: '#FF7F50' }]} onPress={handleBenevolePress}>
@@ -27,11 +28,12 @@ const MyAccountScreen = () => {
             <Text style={styles.buttonText}>Entreprise</Text>
           </TouchableOpacity>
         </View>
+        </SafeAreaView>
       </ImageBackground>
     </ScrollView>
   );
 };
-
+const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
@@ -66,7 +68,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   backgroundImage: {
-    flex: 1,
+    width: width,
+    height: height,
     resizeMode: 'cover',
     justifyContent: 'center',
   },
